@@ -14,7 +14,7 @@ to terminate SSL, and reverse proxy to `cocoa`. Using a daemon like `upstart` (o
     1.  `$ npm install cocoa`
     2.  `$ ln -s node_modules/cocoa/config.json config.json`
     3.  `$ ln -s node_modules/cocoa/index.js index.js`
-2.  Edit `config.json` to configure your email server (or change the port)
+2.  (Optional) Edit `config.json` to configure your email server, etc.
 3.  Run via `node index.js`.
 
 ## Configuration
