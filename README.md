@@ -4,7 +4,7 @@ Password generator service
 
 ## What can this do for me?
 `gpasswd` is a service which can generate 1 or many passwords using a mnemonic word list, and email you the result(s).
-The password(s) are not logged, or saved anywhere.
+The password(s) is not logged, or saved anywhere.
 
 ## How do I run this?
 `gpasswd` can be up and running in 3 steps! When run in a production environment, it's recommended that you use `NGINX`
