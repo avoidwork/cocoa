@@ -1,6 +1,7 @@
 # cocoa
 Password generator service
 
+![demo graphic](https://farm6.staticflickr.com/5346/16766074333_e7702728b6_o.png "cocoa demo")
 
 ## What can cocoa do for me?
 `cocoa` is a service which can generate 1 or many passwords using a mnemonic word list, and email you the result(s).
