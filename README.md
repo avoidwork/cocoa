@@ -19,6 +19,14 @@ to terminate SSL, and reverse proxy to `gpasswd`. Using a daemon like `upstart` 
 {
     "auth": /* Optional, see tenso Authentication section */
     "compress": false, /* Optional, enabled by default, disabled with SSL */
+    "email": {
+        "host": "smtp.host",
+        "port": 465,
+        "secure": true,
+        "from": "You <you@yourdomain>",
+        "user": "you@yourdomain",
+        "pass": "password"
+    },
     "headers": { ... }, /* Optional, custom headers */
     "hostname": "localhost", /* Optional, default is 'localhost' */
     "json": 2, /* Optional, default indent for 'pretty' JSON */
