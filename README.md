@@ -10,7 +10,10 @@ The password(s) is not logged, or saved anywhere.
 `cocoa` can be up and running in 3 steps! When run in a production environment, it's recommended that you use `NGINX`
 to terminate SSL, and reverse proxy to `cocoa`. Using a daemon like `upstart` (on Linux) to run `cocoa` is ideal. 
 
-1.  Clone this repository
+1.  Clone (this)[https://github.com/avoidwork/cocoa] repository, or install from `npm`
+    1.  `$ npm install cocoa`
+    2.  `$ ln -s node_modules/cocoa/config.json config.json`
+    3.  `$ ln -s node_modules/cocoa/index.js index.js`
 2.  Edit `config.json` to configure your email server (or change the port)
 3.  Run via `node index.js`.
 
@@ -19,7 +22,8 @@ to terminate SSL, and reverse proxy to `cocoa`. Using a daemon like `upstart` (o
 {
     "auth": /* Optional, see tenso authentication section */
     "compress": false, /* Optional, enabled by default, disabled with SSL */
-    "email": {
+    "email": { /* Optional, disabled by default */
+        "enabled": true,
         "host": "smtp.host",
         "port": 465,
         "secure": true,
