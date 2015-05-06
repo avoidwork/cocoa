@@ -1,14 +1,14 @@
-# gpasswd
+# cocoa
 Password generator service
 
 
-## What can this do for me?
-`gpasswd` is a service which can generate 1 or many passwords using a mnemonic word list, and email you the result(s).
+## What can cocoa do for me?
+`cocoa` is a service which can generate 1 or many passwords using a mnemonic word list, and email you the result(s).
 The password(s) is not logged, or saved anywhere.
 
-## How do I run this?
-`gpasswd` can be up and running in 3 steps! When run in a production environment, it's recommended that you use `NGINX`
-to terminate SSL, and reverse proxy to `gpasswd`. Using a daemon like `upstart` (on Linux) to run `gpasswd` is ideal. 
+## How do I run cocoa?
+`cocoa` can be up and running in 3 steps! When run in a production environment, it's recommended that you use `NGINX`
+to terminate SSL, and reverse proxy to `cocoa`. Using a daemon like `upstart` (on Linux) to run `cocoa` is ideal. 
 
 1.  Clone this repository
 2.  Edit `config.json` to configure your email server (or change the port)
@@ -17,7 +17,7 @@ to terminate SSL, and reverse proxy to `gpasswd`. Using a daemon like `upstart` 
 ## Configuration
 ```json
 {
-    "auth": /* Optional, see tenso Authentication section */
+    "auth": /* Optional, see tenso authentication section */
     "compress": false, /* Optional, enabled by default, disabled with SSL */
     "email": {
         "host": "smtp.host",

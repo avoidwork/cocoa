@@ -1,26 +1,26 @@
 {
-	"name": "gpasswd",
+	"name": "cocoa",
 	"description": "Password generator service",
 	"version": "1.0.0",
-	"homepage": "https://github.com/avoidwork/gpasswd",
+	"homepage": "https://github.com/avoidwork/cocoa",
 	"author": {
 		"name": "Jason Mulligan",
 		"email": "jason.mulligan@avoidwork.com"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/avoidwork/gpasswd.git"
+		"url": "git://github.com/avoidwork/cocoa.git"
 	},
 	"bugs": {
-		"url": "https://github.com/avoidwork/gpasswd/issues"
+		"url": "https://github.com/avoidwork/cocoa/issues"
 	},
 	"licenses": [
 		{
 			"type": "BSD-3",
-			"url": "https://raw.github.com/avoidwork/gpasswd/master/LICENSE"
+			"url": "https://raw.github.com/avoidwork/cocoa/master/LICENSE"
 		}
 	],
-	"main": "lib/gpasswd",
+	"main": "index",
 	"engines": {
 		"node": ">= 0.10.0"
 	},
