@@ -29,6 +29,14 @@ to terminate SSL, and reverse proxy to `gpasswd`. Using a daemon like `upstart` 
         "stack": true
     },
     "port": 9090, /* Optional, default is 9090 */
+    "rate": {
+        "enabled": true,
+        "limit": 450, /* Maximum requests allowed before `reset` */
+        "reset": 900, /* TTL in seconds */
+        "status": 429, /* Optional HTTP status */
+        "message": "Too many requests",  /* Optional error message */
+        "override": function ( req, rate ) { ... } /* Override the default rate limiting */
+    },
     "session": { /* Optional */
         "secret": null,
         "store": "memory", /* "memory" or "redis" */
