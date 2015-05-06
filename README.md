@@ -18,7 +18,7 @@ to terminate SSL, and reverse proxy to `cocoa`. Using a daemon like `upstart` (o
 3.  Run via `node index.js`.
 
 ## Configuration
-```json
+```
 {
     "auth": /* Optional, see tenso authentication section */
     "compress": false, /* Optional, enabled by default, disabled with SSL */
