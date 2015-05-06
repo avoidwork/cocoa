@@ -29,7 +29,7 @@
 	},
 	"dependencies": {
 		"keigai": "~1.3.11",
-		"tenso": "~1.4.9",
+		"tenso": "~1.4.10",
 		"mpass": "~0.1.1",
 		"nodemailer": "~1.3.1"
 	},

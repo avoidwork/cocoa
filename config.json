@@ -1,23 +1,23 @@
 {
-	"title": "cocoa",
 	"email": {
+		"enabled" : false,
 		"host": "smtp.host",
 		"port": 465,
 		"secure": true,
 		"from": "You <you@yourdomain>",
 		"user": "you@yourdomain",
-		"pass": "password"
-	},
-	"logs": {
-		"level": "info"
+		"pass": "password",
+		"subject": "Your new password",
+		"text": "Hi,\nYour new password is: {{password}}\n",
+		"html": "<p>Hi,</p><p>Your new password is:</p><p><strong>{{password}}</strong></p>"
 	},
 	"headers": {
 		"accept": "application/json"
 	},
-	"email": {
-		"subject": "Your new password",
-		"text": "Hi,\nYour new password is: {{password}}\n",
-		"html": "<p>Hi,</p><p>Your new password is: <strong>{{password}}</strong></p>"
+	"logs": {
+		"level": "info"
 	},
-	"port": 9090
+	"max": 100,
+	"port": 9090,
+	"title": "cocoa"
 }

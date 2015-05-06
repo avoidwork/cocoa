@@ -58,3 +58,8 @@ to terminate SSL, and reverse proxy to `cocoa`. Using a daemon like `upstart` (o
     "uid": N /* Optional, system account uid to drop to after starting with elevated privileges to run on a low port */
 }
 ```
+
+
+## License
+Copyright (c) 2015 Jason Mulligan  
+Licensed under the BSD-3 license.

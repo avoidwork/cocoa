@@ -5,9 +5,12 @@ var mpass = require( "mpass" ),
 	config = require( path.join(__dirname, "config.json" ) ),
 	HEADERS = {"cache-control": "no-cache" },
 	SUCCESS = 200,
+	INVALID = 400,
 	FAILURE = 500,
 	PASSWORDS = 1,
+	PASSWORDS_MAX = config.max || 100,
 	WORDS = 3,
+	WORDS_MAX = 10,
 	mta;
 
 function email ( to, pass ) {
@@ -18,10 +21,10 @@ function email ( to, pass ) {
 		to: to,
 		subject: config.email.subject,
 		text: config.email.text.replace( /\{\{password\}\}/g, pass ),
-		html: config.email.html.replace( /\{\{password\}\}/g, pass )
+		html: config.email.html.replace( /\{\{password\}\}/g, pass.replace( /\n/g, "<br />" ) )
 	}, function ( e, info ) {
 		if ( e ) {
-			log( e, "error" );
+			console.error( e.stack || e.message || e );
 			defer.reject( e );
 		}
 		else {
@@ -43,16 +46,23 @@ mta = nodemailer.createTransport( {
 } );
 
 module.exports.get = {
-	"/": "POST to generate a password. Required parameter is `words` to specify `n` words to use, e.g. 3. Optional parameters are `email` to send as an Email, and `passwords` to generate a list of `n` passwords, e.g. 5."
+	"/": "POST to generate a password. Requires `words` to specify amount to use. Optional parameters are `email` to send as an Email, and `passwords` to generate a list."
 };
 
 module.exports.post = {
 	"/": function ( req, res ) {
-		var words = req.body.words || WORDS,
-			nth = req.body.passwords || PASSWORDS,
+		var words = req.body.words === undefined ? WORDS : req.body.words,
+			nth = req.body.passwords === undefined ? PASSWORDS : req.body.passwords,
 			pass = [],
 			i = -1,
 			result;
+
+		if ( typeof words !== "number" || words < 1 || typeof nth !== "number" || nth < 1 ) {
+			res.error( INVALID, new Error( "Invalid arguments" ) );
+		}
+
+		words = words > WORDS_MAX ? WORDS_MAX : words;
+		nth = nth > PASSWORDS_MAX ? PASSWORDS_MAX : nth;
 
 		while ( ++i < nth ) {
 			pass.push( mpass( words ) )
@@ -60,11 +70,11 @@ module.exports.post = {
 
 		result = nth === 1 ? pass[0] : pass;
 
-		if ( req.parsed.query.email ) {
-			email( req.parsed.query.email, pass.join( "\n" ) ).then( function () {
+		if ( config.email.enabled && req.body.email ) {
+			email( req.body.email, pass.join( "\n" ) ).then( function () {
 				res.respond( result, SUCCESS, HEADERS );
 			}, function ( e ) {
-				res.respond( e.message || e.stack || e, FAILURE, HEADERS );
+				res.error( FAILURE, e );
 			} );
 		} else {
 			res.respond( result, SUCCESS, HEADERS );
