@@ -24,10 +24,8 @@ function email ( to, pass ) {
 		html: config.email.html.replace( /\{\{password\}\}/g, pass.replace( /\n/g, "<br />" ) )
 	}, function ( e, info ) {
 		if ( e ) {
-			console.error( e.stack || e.message || e );
 			defer.reject( e );
-		}
-		else {
+		} else {
 			defer.resolve( info.response );
 		}
 	} );
@@ -74,6 +72,7 @@ module.exports.post = {
 					res.respond( result, SUCCESS, HEADERS );
 				}, function ( e ) {
 					res.error( FAILURE, e );
+					console.error( e.stack || e.message || e );
 				} );
 			} else {
 				res.respond( result, SUCCESS, HEADERS );
