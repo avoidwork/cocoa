@@ -62,7 +62,7 @@ module.exports.post = {
 			nth = nth > PASSWORDS_MAX ? PASSWORDS_MAX : nth;
 
 			while ( ++i < nth ) {
-				pass.push( mpass( words ) )
+				pass.push( mpass( words ) );
 			}
 
 			result = nth === 1 ? pass[ 0 ] : pass;
