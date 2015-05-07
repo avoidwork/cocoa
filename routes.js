@@ -59,25 +59,25 @@ module.exports.post = {
 
 		if ( typeof words !== "number" || words < 1 || typeof nth !== "number" || nth < 1 ) {
 			res.error( INVALID, new Error( "Invalid arguments" ) );
-		}
-
-		words = words > WORDS_MAX ? WORDS_MAX : words;
-		nth = nth > PASSWORDS_MAX ? PASSWORDS_MAX : nth;
-
-		while ( ++i < nth ) {
-			pass.push( mpass( words ) )
-		}
-
-		result = nth === 1 ? pass[0] : pass;
-
-		if ( config.email.enabled && req.body.email ) {
-			email( req.body.email, pass.join( "\n" ) ).then( function () {
-				res.respond( result, SUCCESS, HEADERS );
-			}, function ( e ) {
-				res.error( FAILURE, e );
-			} );
 		} else {
-			res.respond( result, SUCCESS, HEADERS );
+			words = words > WORDS_MAX ? WORDS_MAX : words;
+			nth = nth > PASSWORDS_MAX ? PASSWORDS_MAX : nth;
+
+			while ( ++i < nth ) {
+				pass.push( mpass( words ) )
+			}
+
+			result = nth === 1 ? pass[ 0 ] : pass;
+
+			if ( config.email.enabled && req.body.email ) {
+				email( req.body.email, pass.join( "\n" ) ).then( function () {
+					res.respond( result, SUCCESS, HEADERS );
+				}, function ( e ) {
+					res.error( FAILURE, e );
+				} );
+			} else {
+				res.respond( result, SUCCESS, HEADERS );
+			}
 		}
 	}
 };

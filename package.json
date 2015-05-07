@@ -1,7 +1,7 @@
 {
 	"name": "cocoa",
 	"description": "Password generator service",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"homepage": "https://github.com/avoidwork/cocoa",
 	"author": {
 		"name": "Jason Mulligan",
