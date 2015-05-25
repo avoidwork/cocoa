@@ -1,7 +1,7 @@
 {
 	"name": "cocoa",
 	"description": "Password generator service",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"homepage": "https://github.com/avoidwork/cocoa",
 	"author": {
 		"name": "Jason Mulligan",
@@ -14,19 +14,14 @@
 	"bugs": {
 		"url": "https://github.com/avoidwork/cocoa/issues"
 	},
-	"licenses": [
-		{
-			"type": "BSD-3",
-			"url": "https://raw.github.com/avoidwork/cocoa/master/LICENSE"
-		}
-	],
+	"license": "BSD-3",
 	"main": "index",
 	"engines": {
 		"node": ">= 0.10.0"
 	},
 	"dependencies": {
-		"keigai": "~1.3.11",
-		"tenso": "~1.4.10",
+		"keigai": "~1.3.12",
+		"tenso": "~1.5.1",
 		"mpass": "~0.1.1",
 		"nodemailer": "~1.3.1"
 	},
