@@ -29,7 +29,7 @@ The amount of passwords to generate
 
 #### special
 _Boolean_ (false)
-Randomly adds common "special" characters to a generate password, including capitalization
+Randomly adds common "special" characters to a password, including capitalization
 
 ## Configuration
 ``` 
