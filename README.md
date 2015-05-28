@@ -18,6 +18,19 @@ to terminate SSL, and reverse proxy to `cocoa`. Using a daemon like `upstart` (o
 2.  (Optional) Edit `config.json` to configure your email server, etc.
 3.  Run via `node index.js`.
 
+## Request parameters
+#### words
+_Integer_ (3)
+The amount of words to use
+
+#### passwords
+_Integer_ (1)
+The amount of passwords to generate
+
+#### special
+_Boolean_ (false)
+Randomly adds common "special" characters to a generate password, including capitalization
+
 ## Configuration
 ``` 
 {

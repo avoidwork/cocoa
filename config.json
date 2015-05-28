@@ -8,7 +8,7 @@
 		"user": "you@yourdomain",
 		"pass": "password",
 		"subject": "Your new password",
-		"text": "Hi,\nYour new password is: {{password}}\n",
+		"text": "Hi,\n\nYour new password is:\n\n{{password}}\n",
 		"html": "<p>Hi,</p><p>Your new password is:</p><p><strong>{{password}}</strong></p>"
 	},
 	"headers": {

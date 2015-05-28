@@ -11,6 +11,7 @@ var mpass = require( "mpass" ),
 	PASSWORDS_MAX = config.max || 100,
 	WORDS = 3,
 	WORDS_MAX = 10,
+	SPECIAL = false,
 	mta;
 
 function email ( to, pass ) {
@@ -44,13 +45,14 @@ mta = nodemailer.createTransport( {
 } );
 
 module.exports.get = {
-	"/": "POST to generate a password. Requires `words` to specify amount to use. Optional parameters are `email` to send as an Email, and `passwords` to generate a list."
+	"/": "POST to generate a password. Optional parameters `words` (3) to specify amount to use, `email` to send as an Email, `passwords` (1) to generate a list, & `special` (false) to enable common special characters."
 };
 
 module.exports.post = {
 	"/": function ( req, res ) {
 		var words = req.body.words === undefined ? WORDS : req.body.words,
 			nth = req.body.passwords === undefined ? PASSWORDS : req.body.passwords,
+			special = req.body.special === undefined ? SPECIAL : req.body.special,
 			pass = [],
 			i = -1,
 			result;
@@ -60,9 +62,10 @@ module.exports.post = {
 		} else {
 			words = words > WORDS_MAX ? WORDS_MAX : words;
 			nth = nth > PASSWORDS_MAX ? PASSWORDS_MAX : nth;
+			special = special === true;
 
 			while ( ++i < nth ) {
-				pass.push( mpass( words ) );
+				pass.push( mpass( words, special ) );
 			}
 
 			result = nth === 1 ? pass[ 0 ] : pass;
