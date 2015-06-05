@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Cocoa by avoidwork</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Cocoa</h1>
+      <h2 class="project-tagline">Password generator service</h2>
+      <a href="https://github.com/avoidwork/cocoa" class="btn">View on GitHub</a>
+      <a href="https://github.com/avoidwork/cocoa/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/avoidwork/cocoa/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="cocoa" class="anchor" href="#cocoa" aria-hidden="true"><span class="octicon octicon-link"></span></a>cocoa</h1>
+
+<p>Password generator service</p>
+
+<p><img src="https://farm6.staticflickr.com/5346/16766074333_e7702728b6_o.png" alt="demo graphic" title="cocoa demo"></p>
+
+<h2>
+<a id="what-can-cocoa-do-for-me" class="anchor" href="#what-can-cocoa-do-for-me" aria-hidden="true"><span class="octicon octicon-link"></span></a>What can cocoa do for me?</h2>
+
+<p><code>cocoa</code> is a service which can generate 1 or many passwords using a mnemonic word list, and email you the result(s).
+The password(s) is not logged, or saved anywhere.</p>
+
+<h2>
+<a id="how-do-i-run-cocoa" class="anchor" href="#how-do-i-run-cocoa" aria-hidden="true"><span class="octicon octicon-link"></span></a>How do I run cocoa?</h2>
+
+<p><code>cocoa</code> can be up and running in 3 steps! When run in a production environment, it's recommended that you use <code>NGINX</code>
+to terminate SSL, and reverse proxy to <code>cocoa</code>. Using a daemon like <code>upstart</code> (on Linux) to run <code>cocoa</code> is ideal. </p>
+
+<ol>
+<li> Clone <a href="https://github.com/avoidwork/cocoa">this</a> repository, or install from <code>npm</code>:
+
+<ol>
+<li> <code>$ npm install cocoa</code>
+</li>
+<li> <code>$ ln -s node_modules/cocoa/config.json config.json</code>
+</li>
+<li> <code>$ ln -s node_modules/cocoa/index.js index.js</code>
+</li>
+</ol>
+</li>
+<li> (Optional) Edit <code>config.json</code> to configure your email server, etc.</li>
+<li> Run via <code>node index.js</code>.</li>
+</ol>
+
+<h2>
+<a id="request-parameters" class="anchor" href="#request-parameters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Request parameters</h2>
+
+<h4>
+<a id="words" class="anchor" href="#words" aria-hidden="true"><span class="octicon octicon-link"></span></a>words</h4>
+
+<p><em>Integer</em> (3)
+The amount of words to use</p>
+
+<h4>
+<a id="passwords" class="anchor" href="#passwords" aria-hidden="true"><span class="octicon octicon-link"></span></a>passwords</h4>
+
+<p><em>Integer</em> (1)
+The amount of passwords to generate</p>
+
+<h4>
+<a id="special" class="anchor" href="#special" aria-hidden="true"><span class="octicon octicon-link"></span></a>special</h4>
+
+<p><em>Boolean</em> (false)
+Randomly adds common "special" characters to a password, including capitalization</p>
+
+<h2>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h2>
+
+<pre><code>{
+    "auth": /* Optional, see tenso authentication section */
+    "compress": false, /* Optional, enabled by default, disabled with SSL */
+    "email": { /* Optional, disabled by default */
+        "enabled": true,
+        "host": "smtp.host",
+        "port": 465,
+        "secure": true,
+        "from": "You &lt;you@yourdomain&gt;",
+        "user": "you@yourdomain",
+        "pass": "password"
+    },
+    "headers": { ... }, /* Optional, custom headers */
+    "hostname": "localhost", /* Optional, default is 'localhost' */
+    "json": 2, /* Optional, default indent for 'pretty' JSON */
+    "logs": { /* Optional */
+        "level": "debug",
+        "stdout": true,
+        "dtrace": true,
+        "stack": true
+    },
+    "port": 9090, /* Optional, default is 9090 */
+    "rate": {
+        "enabled": true,
+        "limit": 450, /* Maximum requests allowed before `reset` */
+        "reset": 900, /* TTL in seconds */
+        "status": 429, /* Optional HTTP status */
+        "message": "Too many requests",  /* Optional error message */
+        "override": function ( req, rate ) { ... } /* Override the default rate limiting */
+    },
+    "session": { /* Optional */
+        "secret": null,
+        "store": "memory", /* "memory" or "redis" */
+        "redis": /* See connect-redis for options */
+    },
+    "ssl": { /* Optional */
+        "cert": null,
+        "key": null
+    },
+    "title": "My API", /* Page title for browsable API */
+    "uid": N /* Optional, system account uid to drop to after starting with elevated privileges to run on a low port */
+}
+</code></pre>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>Copyright (c) 2015 Jason Mulligan<br>
+Licensed under the BSD-3 license.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/avoidwork/cocoa">Cocoa</a> is maintained by <a href="https://github.com/avoidwork">avoidwork</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
+
