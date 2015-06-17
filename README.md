@@ -18,6 +18,15 @@ to terminate SSL, and reverse proxy to `cocoa`. Using a daemon like `upstart` (o
 2.  (Optional) Edit `config.json` to configure your email server, etc.
 3.  Run via `node index.js`.
 
+#### Upstart
+Use the provided upstart recipe: `sudo cp node_modules/cocoa/cocoa.conf /etc/init & service start cocoa`
+
+#### Systemd
+Use the provided systemd service: `sudo cp node_modules/cocoa/cocoa.service /etc/systemd/system & systemctl enable cocoa & systemctl start cocoa`
+
+#### What about Windows?
+It runs great on Windows, but you're on your own to daemonize it!
+
 ## Request parameters
 #### words
 _Integer_ (3)

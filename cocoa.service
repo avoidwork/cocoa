@@ -1,0 +1,20 @@
+[Unit]
+Description=Job that runs the cocoa server
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/node /opt/cocoa/index.js
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=cocoa
+Environment=NODE_ENV=production
+LimitFSIZE=unlimited
+LimitCPU=unlimited
+LimitAS=unlimited
+LimitNOFILE=64000
+LimitRSS=unlimited
+LimitNPROC=32000
+
+[Install]
+WantedBy=multi-user.target
