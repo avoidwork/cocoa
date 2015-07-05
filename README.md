@@ -1,4 +1,6 @@
 # cocoa
+
+[![Join the chat at https://gitter.im/avoidwork/cocoa](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/avoidwork/cocoa?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Password generator service
 
 ![demo graphic](https://farm6.staticflickr.com/5346/16766074333_e7702728b6_o.png "cocoa demo")
