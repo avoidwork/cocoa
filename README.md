@@ -21,7 +21,7 @@ to terminate SSL, and reverse proxy to `cocoa`. Using a daemon like `upstart` (o
 3.  Run via `node index.js`.
 
 #### Upstart
-Use the provided upstart recipe: `sudo sh -c 'cp node_modules/cocoa/cocoa.conf /etc/init; service start cocoa;'`
+Use the provided upstart recipe: `sudo sh -c 'cp node_modules/cocoa/cocoa.conf /etc/init; service cocoa start;'`
 
 #### Systemd
 Use the provided systemd service: `sudo sh -c 'cp node_modules/cocoa/cocoa.service /etc/systemd/system; systemctl enable cocoa; systemctl start cocoa;'`
