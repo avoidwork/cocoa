@@ -1,5 +1,5 @@
 var mpass = require("mpass"),
-	util = require("keigai").util,
+	deferred = require("tiny-defer"),
 	nodemailer = require("nodemailer"),
 	path = require("path"),
 	config = require(path.join(__dirname, "config.json")),
@@ -15,7 +15,7 @@ var mpass = require("mpass"),
 	mta;
 
 function email (to, pass) {
-	var defer = util.defer();
+	let defer = deferred();
 
 	mta.sendMail({
 		from: config.email.from,
@@ -23,7 +23,7 @@ function email (to, pass) {
 		subject: config.email.subject,
 		text: config.email.text.replace(/\{\{password\}\}/g, pass),
 		html: config.email.html.replace(/\{\{password\}\}/g, pass.replace(/\n/g, "<br />"))
-	}, function (e, info) {
+	}, (e, info) => {
 		if (e) {
 			defer.reject(e);
 		} else {
@@ -31,7 +31,7 @@ function email (to, pass) {
 		}
 	});
 
-	return defer;
+	return defer.promise;
 }
 
 mta = nodemailer.createTransport({
@@ -49,8 +49,8 @@ module.exports.get = {
 };
 
 module.exports.post = {
-	"/": function (req, res) {
-		var words = req.body.words === undefined ? WORDS : req.body.words,
+	"/": (req, res) => {
+		let words = req.body.words === undefined ? WORDS : req.body.words,
 			nth = req.body.passwords === undefined ? PASSWORDS : req.body.passwords,
 			special = req.body.special === undefined ? SPECIAL : req.body.special,
 			pass = [],
@@ -71,14 +71,14 @@ module.exports.post = {
 			result = nth === 1 ? pass[0] : pass;
 
 			if (config.email.enabled && req.body.email) {
-				email(req.body.email, pass.join("\n")).then(function () {
-					res.respond(result, SUCCESS, HEADERS);
-				}, function (e) {
+				email(req.body.email, pass.join("\n")).then(() => {
+					res.send(result, SUCCESS, HEADERS);
+				}, (e) => {
 					res.error(FAILURE, e);
 					console.error(e.stack || e.message || e);
 				});
 			} else {
-				res.respond(result, SUCCESS, HEADERS);
+				res.send(result, SUCCESS, HEADERS);
 			}
 		}
 	}
