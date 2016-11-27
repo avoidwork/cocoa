@@ -1,4 +1,4 @@
-var tenso = require("tenso"),
+const tenso = require("tenso"),
 	path = require("path"),
 	config = require(path.join(__dirname, "config.json"));
 
