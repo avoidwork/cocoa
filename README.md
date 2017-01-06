@@ -36,6 +36,14 @@ It runs great on Windows, but you're on your own to daemonize it!
 _Integer_ (3)
 The amount of words to use
 
+#### min
+_Integer_ (0)
+Minimum length of the password
+
+#### max
+_Integer_ (0)
+Maximum length of the password
+
 #### passwords
 _Integer_ (1)
 The amount of passwords to generate
@@ -61,11 +69,9 @@ Randomly adds common "special" characters to a password, including capitalizatio
     "headers": { ... }, /* Optional, custom headers */
     "hostname": "localhost", /* Optional, default is 'localhost' */
     "json": 2, /* Optional, default indent for 'pretty' JSON */
-    "logs": { /* Optional */
-        "level": "debug",
-        "stdout": true,
-        "dtrace": true,
-        "stack": true
+    "logging": { /* Optional */
+        "level": "info",
+        "enabled": true
     },
     "port": 9090, /* Optional, default is 9090 */
     "rate": {

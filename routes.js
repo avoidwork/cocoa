@@ -13,6 +13,7 @@ const mpass = require("mpass"),
 	WORDS_MAX = 10,
 	MIN_LENGTH = 0,
 	MAX_LENGTH = 100,
+	MAX_ITERATION = config.attempts || 10,
 	SPECIAL = false;
 
 let mta;
@@ -49,7 +50,7 @@ mta = nodemailer.createTransport({
 
 module.exports = {
 	get: {
-		"/": config.instruction
+		"/": config.instruction.create
 	},
 	post: {
 		"/": (req, res) => {
@@ -60,42 +61,56 @@ module.exports = {
 				max = req.body.max === undefined ? MAX_LENGTH : req.body.max,
 				pass = [],
 				i = -1,
-				result, tmp;
+				valid = true,
+				n, result, tmp;
 
 			if (typeof words !== "number" || words < 1 || typeof nth !== "number" || nth < 1) {
-				res.error(INVALID, new Error("Invalid arguments"));
+				res.error(INVALID, new Error(config.instruction.invalid));
 			} else {
 				words = words > WORDS_MAX ? WORDS_MAX : words;
 				nth = nth > PASSWORDS_MAX ? PASSWORDS_MAX : nth;
 				special = special === true;
 
-				if (min > 0) {
-					while (++i < nth) {
-						tmp = "";
+				if (min >= max) {
+					res.error(INVALID, new Error(config.instruction.error));
+				} else {
+					if (min > 0) {
+						while (valid && ++i < nth) {
+							tmp = "";
+							n = 0;
 
-						while (tmp.length < min && tmp.length < max) {
-							tmp = mpass(words, special);
+							while (tmp.length < min && tmp.length < max && ++n < MAX_ITERATION) {
+								tmp = mpass(words, special);
+							}
+
+							if (n === MAX_ITERATION || tmp.length > max) {
+								valid = false;
+							} else {
+								pass.push(tmp);
+							}
 						}
-
-						pass.push(tmp);
+					} else {
+						while (++i < nth) {
+							pass.push(mpass(words, special));
+						}
 					}
-				} else {
-					while (++i < nth) {
-						pass.push(mpass(words, special));
+
+					if (valid) {
+						result = nth === 1 ? pass[0] : pass;
+
+						if (config.email.enabled && req.body.email) {
+							email(req.body.email, pass.join("\n")).then(() => {
+								res.send(result, SUCCESS, HEADERS);
+							}, e => {
+								res.error(FAILURE, e);
+								console.error(e.stack || e.message || e);
+							});
+						} else {
+							res.send(result, SUCCESS, HEADERS);
+						}
+					} else {
+						res.error(INVALID, new Error(config.instruction.error));
 					}
-				}
-
-				result = nth === 1 ? pass[0] : pass;
-
-				if (config.email.enabled && req.body.email) {
-					email(req.body.email, pass.join("\n")).then(() => {
-						res.send(result, SUCCESS, HEADERS);
-					}, e => {
-						res.error(FAILURE, e);
-						console.error(e.stack || e.message || e);
-					});
-				} else {
-					res.send(result, SUCCESS, HEADERS);
 				}
 			}
 		}

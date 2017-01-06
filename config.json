@@ -1,6 +1,6 @@
 {
 	"email": {
-		"enabled" : false,
+		"enabled": false,
 		"host": "smtp.host",
 		"port": 465,
 		"secure": true,
@@ -19,7 +19,12 @@
 		"level": "info",
 		"enabled": true
 	},
-	"instruction": "POST to generate a password. Optional parameters `words` (3) to specify amount to use, `min` to set the minimum length, `max` to set the maximum length, `email` to send as an Email, `passwords` (1) to generate a list, & `special` (false) to enable common special characters.",
+	"instruction": {
+		"create": "POST to generate a password. Optional parameters `words` (3) to specify amount to use, `min` to set the minimum length, `max` to set the maximum length, `email` to send as an Email, `passwords` (1) to generate a list, & `special` (false) to enable common special characters.",
+		"error": "Could not generate a password that met criteria in a reasonable amount of attempts.",
+		"invalid": "Invalid arguments"
+	},
+	"attempts": 10,
 	"max": 100,
 	"port": 9090,
 	"title": "cocoa"

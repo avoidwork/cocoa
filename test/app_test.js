@@ -25,13 +25,13 @@ function get_token (fn, url) {
 
 describe("Public", function () {
 	describe("GET / returns instructions", function () {
-		it("returns a string", function (done) {
+		it("returns an object with an instruction", function (done) {
 			api()
 				.get("/")
 				.expectStatus(200)
 				.expectHeader("allow", "GET, HEAD, OPTIONS, POST")
 				.expectValue("links", [])
-				.expectValue("data", config.instruction)
+				.expectValue("data", config.instruction.create)
 				.expectValue("error", null)
 				.expectValue("status", 200)
 				.end(function (err) {
@@ -65,7 +65,7 @@ describe("Public", function () {
 	});
 
 	describe("POST / success", function () {
-		it("returns an object with instructions", function (done) {
+		it("returns an object with a password", function (done) {
 			get_token(function (err, res) {
 				if (err) {
 					throw err;
@@ -88,8 +88,8 @@ describe("Public", function () {
 		});
 	});
 
-	describe("POST / success (min & max length)", function () {
-		it("returns an object with instructions", function (done) {
+	describe("POST / success (min & max)", function () {
+		it("returns an object with a password", function (done) {
 			get_token(function (err, res) {
 				const min = 10,
 					max = 20;
@@ -102,7 +102,7 @@ describe("Public", function () {
 				api()
 					.header(csrf, token)
 					.post("/")
-					.send({min: min, max: 20})
+					.send({min: min, max: max})
 					.json()
 					.expectStatus(200)
 					.expectHeader("allow", "GET, HEAD, OPTIONS, POST")
@@ -111,6 +111,57 @@ describe("Public", function () {
 					.expect(function (r, body, next) {
 						next(body.data.length < min || body.data.length > max);
 					})
+					.end(function () {
+						done();
+					});
+			});
+		});
+	});
+
+	describe("POST / failure (invalid min & max)", function () {
+		const min = 1,
+			max = 2;
+
+		it("returns an object with an error", function (done) {
+			get_token(function (err, res) {
+				if (err) {
+					throw err;
+				}
+
+				token = res.headers[csrf];
+				api()
+					.header(csrf, token)
+					.post("/")
+					.send({min: min, max: max})
+					.json()
+					.expectStatus(400)
+					.expectHeader("allow", "GET, HEAD, OPTIONS, POST")
+					.expectValue("data", null)
+					.expectValue("error", config.instruction.error)
+					.expectValue("status", 400)
+					.end(function () {
+						done();
+					});
+			});
+		});
+
+		it("returns an object with an error", function (done) {
+			get_token(function (err, res) {
+				if (err) {
+					throw err;
+				}
+
+				token = res.headers[csrf];
+				api()
+					.header(csrf, token)
+					.post("/")
+					.send({min: max, max: min})
+					.json()
+					.expectStatus(400)
+					.expectHeader("allow", "GET, HEAD, OPTIONS, POST")
+					.expectValue("data", null)
+					.expectValue("error", config.instruction.error)
+					.expectValue("status", 400)
 					.end(function () {
 						done();
 					});
