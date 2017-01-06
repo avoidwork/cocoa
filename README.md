@@ -92,5 +92,5 @@ Randomly adds common "special" characters to a password, including capitalizatio
 
 
 ## License
-Copyright (c) 2015 Jason Mulligan  
+Copyright (c) 2017 Jason Mulligan
 Licensed under the BSD-3 license.
