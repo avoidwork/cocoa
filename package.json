@@ -19,6 +19,10 @@
   "engines": {
     "node": ">= 6.0.0"
   },
+  "scripts": {
+    "test": "grunt test",
+    "start": "node index.js"
+  },
   "engineStrict": true,
   "dependencies": {
     "mpass": "~1.0.3",
