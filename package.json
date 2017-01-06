@@ -1,7 +1,7 @@
 {
   "name": "cocoa",
   "description": "Password generator microservice",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "homepage": "https://github.com/avoidwork/cocoa",
   "author": {
     "name": "Jason Mulligan",
@@ -23,14 +23,25 @@
   "dependencies": {
     "mpass": "~1.0.3",
     "nodemailer": "~1.4.0",
-    "tenso": "~4.1.8",
+    "tenso": "~4.3.7",
     "tiny-defer": "^2.0.2"
   },
   "keywords": [
     "password",
     "generator",
     "micro",
+    "microservice",
     "service",
     "saas"
-  ]
+  ],
+  "devDependencies": {
+    "grunt": "~1.0.1",
+    "grunt-cli": "~1.2.0",
+    "grunt-contrib-watch": "~1.0.0",
+    "grunt-eslint": "~19.0.0",
+    "grunt-mocha-test": "~0.13.2",
+    "grunt-nsp": "~2.3.1",
+    "hippie": "~0.5.1",
+    "mocha": "~3.1.2"
+  }
 }

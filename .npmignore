@@ -1,0 +1,6 @@
+/.idea/
+/node_modules/
+/test/
+.gitignore
+.travis.yml
+Gruntfile.js

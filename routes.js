@@ -1,4 +1,4 @@
-var mpass = require("mpass"),
+const mpass = require("mpass"),
 	deferred = require("tiny-defer"),
 	nodemailer = require("nodemailer"),
 	path = require("path"),
@@ -11,8 +11,11 @@ var mpass = require("mpass"),
 	PASSWORDS_MAX = config.max || 100,
 	WORDS = 3,
 	WORDS_MAX = 10,
-	SPECIAL = false,
-	mta;
+	MIN_LENGTH = 0,
+	MAX_LENGTH = 100,
+	SPECIAL = false;
+
+let mta;
 
 function email (to, pass) {
 	let defer = deferred();
@@ -44,41 +47,56 @@ mta = nodemailer.createTransport({
 	}
 });
 
-module.exports.get = {
-	"/": "POST to generate a password. Optional parameters `words` (3) to specify amount to use, `email` to send as an Email, `passwords` (1) to generate a list, & `special` (false) to enable common special characters."
-};
+module.exports = {
+	get: {
+		"/": config.instruction
+	},
+	post: {
+		"/": (req, res) => {
+			let words = req.body.words === undefined ? WORDS : req.body.words,
+				nth = req.body.passwords === undefined ? PASSWORDS : req.body.passwords,
+				special = req.body.special === undefined ? SPECIAL : req.body.special,
+				min = req.body.min === undefined ? MIN_LENGTH : req.body.min,
+				max = req.body.max === undefined ? MAX_LENGTH : req.body.max,
+				pass = [],
+				i = -1,
+				result, tmp;
 
-module.exports.post = {
-	"/": (req, res) => {
-		let words = req.body.words === undefined ? WORDS : req.body.words,
-			nth = req.body.passwords === undefined ? PASSWORDS : req.body.passwords,
-			special = req.body.special === undefined ? SPECIAL : req.body.special,
-			pass = [],
-			i = -1,
-			result;
-
-		if (typeof words !== "number" || words < 1 || typeof nth !== "number" || nth < 1) {
-			res.error(INVALID, new Error("Invalid arguments"));
-		} else {
-			words = words > WORDS_MAX ? WORDS_MAX : words;
-			nth = nth > PASSWORDS_MAX ? PASSWORDS_MAX : nth;
-			special = special === true;
-
-			while (++i < nth) {
-				pass.push(mpass(words, special));
-			}
-
-			result = nth === 1 ? pass[0] : pass;
-
-			if (config.email.enabled && req.body.email) {
-				email(req.body.email, pass.join("\n")).then(() => {
-					res.send(result, SUCCESS, HEADERS);
-				}, (e) => {
-					res.error(FAILURE, e);
-					console.error(e.stack || e.message || e);
-				});
+			if (typeof words !== "number" || words < 1 || typeof nth !== "number" || nth < 1) {
+				res.error(INVALID, new Error("Invalid arguments"));
 			} else {
-				res.send(result, SUCCESS, HEADERS);
+				words = words > WORDS_MAX ? WORDS_MAX : words;
+				nth = nth > PASSWORDS_MAX ? PASSWORDS_MAX : nth;
+				special = special === true;
+
+				if (min > 0) {
+					while (++i < nth) {
+						tmp = "";
+
+						while (tmp.length < min && tmp.length < max) {
+							tmp = mpass(words, special);
+						}
+
+						pass.push(tmp);
+					}
+				} else {
+					while (++i < nth) {
+						pass.push(mpass(words, special));
+					}
+				}
+
+				result = nth === 1 ? pass[0] : pass;
+
+				if (config.email.enabled && req.body.email) {
+					email(req.body.email, pass.join("\n")).then(() => {
+						res.send(result, SUCCESS, HEADERS);
+					}, e => {
+						res.error(FAILURE, e);
+						console.error(e.stack || e.message || e);
+					});
+				} else {
+					res.send(result, SUCCESS, HEADERS);
+				}
 			}
 		}
 	}

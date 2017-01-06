@@ -11,12 +11,15 @@
 		"text": "Hi,\n\nYour new password is:\n\n{{password}}\n",
 		"html": "<p>Hi,</p><p>Your new password is:</p><p><strong>{{password}}</strong></p>"
 	},
+	"cacheSize": 5,
 	"headers": {
 		"accept": "application/json"
 	},
-	"logs": {
-		"level": "info"
+	"logging": {
+		"level": "info",
+		"enabled": true
 	},
+	"instruction": "POST to generate a password. Optional parameters `words` (3) to specify amount to use, `min` to set the minimum length, `max` to set the maximum length, `email` to send as an Email, `passwords` (1) to generate a list, & `special` (false) to enable common special characters.",
 	"max": 100,
 	"port": 9090,
 	"title": "cocoa"
