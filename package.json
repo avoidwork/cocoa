@@ -1,7 +1,7 @@
 {
   "name": "cocoa",
   "description": "Password generator microservice",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "homepage": "https://github.com/avoidwork/cocoa",
   "author": {
     "name": "Jason Mulligan",
@@ -45,7 +45,7 @@
     "grunt-eslint": "~19.0.0",
     "grunt-mocha-test": "~0.13.2",
     "grunt-nsp": "~2.3.1",
-    "hippie": "~0.5.1",
-    "mocha": "~3.1.2"
+    "mocha": "~3.2.0",
+    "tiny-httptest": "^1.0.5"
   }
 }
