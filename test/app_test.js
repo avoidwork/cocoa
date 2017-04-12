@@ -84,7 +84,7 @@ describe("Public", function () {
 				.expectValue("error", null)
 				.expectValue("status", 200)
 				.expectBody(function (arg) {
-					return arg.data.length < min || arg.data.length > max;
+					return arg.data.length >= min && arg.data.length <= max;
 				})
 				.end();
 		});
