@@ -27,7 +27,7 @@
   "dependencies": {
     "mpass": "~1.0.3",
     "nodemailer": "~3.0.2",
-    "tenso": "~4.3.35",
+    "tenso": "~4.3.34",
     "tiny-defer": "~2.0.2"
   },
   "keywords": [
