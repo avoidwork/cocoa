@@ -1,7 +1,7 @@
 {
   "name": "cocoa",
   "description": "Password generator microservice",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "homepage": "https://github.com/avoidwork/cocoa",
   "author": {
     "name": "Jason Mulligan",
@@ -27,7 +27,7 @@
   "dependencies": {
     "mpass": "~1.0.3",
     "nodemailer": "~4.0.1",
-    "tenso": "~4.5.8",
+    "tenso": "~4.5.9",
     "tiny-defer": "~2.0.2"
   },
   "keywords": [
