@@ -4,7 +4,8 @@ const tinyhttptest = require("tiny-httptest"),
 	path = require("path"),
 	app = require(path.join(__dirname, "..", "index.js")),
 	config = require(path.join(__dirname, "..", "config.json")),
-	csrf = "x-csrf-token";
+	csrf = "x-csrf-token",
+	origin = "http://not.localhost";
 
 app.server.config.logging.enabled = false;
 
@@ -27,20 +28,17 @@ describe("Public", function () {
 	describe("GET / returns instructions (CORS)", function () {
 		it("returns an object with an instruction", function () {
 			return tinyhttptest({url: "http://localhost:" + config.port, method: "options"})
-				.cors()
+				.cors(origin)
 				.end()
-				.then(() => {
-					return tinyhttptest({url: "http://localhost:" + config.port})
-						.cookies()
-						.cors()
-						.expectStatus(200)
-						.expectHeader("allow", "GET, HEAD, OPTIONS, POST")
-						.expectValue("links", [])
-						.expectValue("data", config.instruction.create)
-						.expectValue("error", null)
-						.expectValue("status", 200)
-						.end();
-				});
+				.then(() => tinyhttptest({url: "http://localhost:" + config.port})
+					.cors(origin)
+					.expectStatus(200)
+					.expectHeader("allow", "GET, HEAD, OPTIONS, POST")
+					.expectValue("links", [])
+					.expectValue("data", config.instruction.create)
+					.expectValue("error", null)
+					.expectValue("status", 200)
+					.end());
 		});
 	});
 
