@@ -1,7 +1,7 @@
 {
   "name": "cocoa",
   "description": "Password generator microservice",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "homepage": "https://github.com/avoidwork/cocoa",
   "author": {
     "name": "Jason Mulligan",

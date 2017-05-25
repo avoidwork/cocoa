@@ -13,7 +13,7 @@
 	},
 	"cacheSize": 5,
 	"headers": {
-		"cache-content": "private, no-cache, must-revalidate"
+		"cache-control": "private, no-cache, must-revalidate"
 	},
 	"logging": {
 		"level": "info",
