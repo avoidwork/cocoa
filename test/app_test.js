@@ -7,7 +7,7 @@ const tinyhttptest = require("tiny-httptest"),
 	csrf = "x-csrf-token",
 	origin = "http://not.localhost";
 
-app.server.config.logging.enabled = false;
+app.config.logging.enabled = false;
 
 describe("Public", function () {
 	describe("GET / returns instructions", function () {
